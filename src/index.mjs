@@ -33,16 +33,16 @@ const benchFileSize = () => {
   )[0];
   const fldSize = statSync(`${__dirname}/../fielder/dist/${fldJsFile}`).size;
 
-  const fmkJsFile = readdirSync(`${__dirname}/../formik/dist`).filter(
+  const hfFile = readdirSync(`${__dirname}/../hooked-form/dist`).filter(
     f => f.indexOf(".js") > 0
   )[0];
-  const fmkSize = statSync(`${__dirname}/../formik/dist/${fmkJsFile}`).size;
+  const hfSize = statSync(`${__dirname}/../hooked-form/dist/${hfFile}`).size;
 
   console.log(`=== Bundle size ===`);
   console.log(`Fielder: ${fldSize}`);
-  console.log(`Formik: ${fmkSize}`);
+  console.log(`HF: ${hfSize}`);
   console.log(
-    getPerfDiff(fldSize, fmkSize).replace(/faster/, "smaller") + "\n"
+    getPerfDiff(fldSize, hfSize).replace(/faster/, "smaller") + "\n"
   );
 };
 
@@ -83,7 +83,7 @@ const testChange = async url => {
 
 const run = async () => {
   const fielder = {};
-  const formik = {};
+  const hof = {};
   const runs = 50;
 
   process.stdout.clearScreenDown();
@@ -100,13 +100,13 @@ const run = async () => {
   while (run < runs) {
     printProgress();
     const fld = await testChange("http://localhost:5001");
-    const fmk = await testChange("http://localhost:5002");
+    const hf = await testChange("http://localhost:5002");
 
     Object.keys(fld).forEach(key => {
       fielder[key] = (fielder[key] || 0) + fld[key];
     });
-    Object.keys(fmk).forEach(key => {
-      formik[key] = (formik[key] || 0) + fmk[key];
+    Object.keys(hf).forEach(key => {
+      hof[key] = (hof[key] || 0) + hf[key];
     });
     run += 1;
   }
@@ -119,8 +119,8 @@ const run = async () => {
   Object.keys(fielder).forEach(key => {
     console.log(`=== ${key} ===`);
     console.log(`Fielder: ${fielder[key] / runs} (average)`);
-    console.log(`Formik: ${formik[key] / runs} (average)`);
-    console.log(getPerfDiff(fielder[key] / runs, formik[key] / runs) + "\n");
+    console.log(`HF: ${hof[key] / runs} (average)`);
+    console.log(getPerfDiff(fielder[key] / runs, hof[key] / runs) + "\n");
   });
 };
 

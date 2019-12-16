@@ -12,11 +12,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently --raw \"npm run fielder\" \"npm run formik\" \"sleep 10 && clear && npm run bench\"",
-    "fielder": "npm --prefix fielder run start",
-    "formik": "npm --prefix formik run start",
-    "bench": "node src/index.mjs",
-    "postinstall": "npm ci --prefix fielder && npm ci --prefix formik"
+    "start": "concurrently --raw \"yarn fielder\" \"yarn formik\" \"sleep 10 && clear && yarn bench\"",
+    "fielder": "yarn --prefix fielder run start",
+    "formik": "yarn --prefix formik run start",
+    "bench": "node src/index.mjs"
   },
   "author": "",
   "license": "ISC",
